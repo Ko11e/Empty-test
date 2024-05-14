@@ -6,21 +6,19 @@ document.getElementById("status").addEventListener("click", e => getStatus(e));
 document.getElementById("submit").addEventListener("click", e => postForm(e));
 
 function processOptions(form) {
-
     let optArray = [];
 
-    for (entry of form.entries()){
-        if (entry[0] === "options"){
-            optArray.push(entry[1]);
+    for (let e of form.entries()) {
+        if (e[0] === "options") {
+            optArray.push(e[1]);
         }
     }
-    
+
     form.delete("options");
 
     form.append("options", optArray.join());
-    
-    return form;
 
+    return form;
 }
 
 async function postForm(e) {
@@ -41,7 +39,6 @@ async function postForm(e) {
         displayErrors(data);
     } else {
         displayException(data);
-        console.log(data.error);
         throw new Error(data.error);
     }
 
@@ -58,17 +55,17 @@ async function getStatus(e) {
     if (response.ok) {
         displayStatus(data);
     } else {
-        displayException(data)
-        console.log(data.error)
+        displayException(data);
         throw new Error(data.error);
     }
 
 }
 
-function displayException(data){
+function displayException(data) {
 
-    let heading = `An Exception Occurred`;
-    let results = `<div>The API returned status code ${data.status_code}</div>`;
+    let heading = `<div class="error-heading">An Exception Occurred</div>`;
+
+    results = `<div>The API returned status code ${data.status_code}</div>`;
     results += `<div>Error number: <strong>${data.error_no}</strong></div>`;
     results += `<div>Error text: <strong>${data.error}</strong></div>`;
 
